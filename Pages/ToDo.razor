@@ -1,0 +1,29 @@
+﻿@page "/todo"
+<h3>Tareas pendientes: (@todos.Count(todo => !todo.IsDone))</h3>
+
+<ul>
+    @foreach (var todo in todos)
+    {
+        
+        <li>
+            <input type="checkbox" @bind="todo.IsDone" />
+            @todo.Title
+        </li>
+    }
+</ul>
+
+<input placeholder="Ingresa alguna tarea" @bind="newToDo" />
+<button @onclick="AddToDo">Añadir tarea</button>
+
+@code {
+ private List<ToDoItem> todos = new();
+ private string? newToDo;
+  private void AddToDo()
+    {
+        if (!string.IsNullOrWhiteSpace(newToDo))
+        {
+            todos.Add(new ToDoItem { Title = newToDo });
+            newToDo = string.Empty;
+        }
+    }
+}
